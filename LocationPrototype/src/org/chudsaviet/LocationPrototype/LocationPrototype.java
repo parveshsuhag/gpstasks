@@ -8,13 +8,14 @@ import android.location.*;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.*;
 import android.widget.*;
 
 public class LocationPrototype extends Activity {
 	
 	public OnClickListener buttonListener=new OnClickListener()
 	{
+		@Override
 		public void onClick(View v) {
 			LocationManager lm=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		       
@@ -48,6 +49,7 @@ public class LocationPrototype extends Activity {
 	        	Log.i("Location Provider", "gps disabled");
 	        	
 		}
+
 	};
 	
     /** Called when the activity is first created. */
