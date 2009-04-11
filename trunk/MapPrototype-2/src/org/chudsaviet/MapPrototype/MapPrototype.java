@@ -6,7 +6,7 @@ import com.google.android.maps.*;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.View.*;
 import android.widget.*;
 
 public class MapPrototype extends MapActivity {
@@ -30,6 +30,7 @@ public class MapPrototype extends MapActivity {
     
     public OnClickListener buttonListener=new OnClickListener()
 	{
+    	@Override
 		public void onClick(View v) {
 			
 	        	LinearLayout linearLayout = (LinearLayout) findViewById(R.id.zoomview);
