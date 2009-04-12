@@ -1,10 +1,8 @@
 package org.chudsaviet.MapPrototype;
 import java.util.*;
 
-import android.graphics.drawable.Drawable;
-
-import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.OverlayItem;
+import android.graphics.drawable.*;
+import com.google.android.maps.*;
 
 
 public class NuclearItemizedOverlay extends ItemizedOverlay<OverlayItem> {
