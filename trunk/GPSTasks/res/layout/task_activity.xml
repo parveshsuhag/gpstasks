@@ -5,30 +5,36 @@
     android:layout_height="fill_parent"
     >
     
-	<LinearLayout
- 	   android:orientation="horizontal"
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	>
+    	android:stretchColumns="1">
+
+        <TableRow>
     	<!-- Left button with arrow -->
     	<Button android:id="@+id/button_left_arrow" 
     		style="?android:attr/buttonStyleSmall"
     		android:layout_width="wrap_content" 
-    		android:layout_height="wrap_content"/>
-    	<!-- EditText with task's name -->
-    	<EditText
-        	android:id="@+id/entry"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content">
-        	android:gravity="fill_horizontal"
-        </EditText>
+    		android:layout_height="wrap_content"
+    		android:text="{"
+    		android:textSize="30dp"
+    	/>
+    			<!-- EditText with task's name -->
+    			<EditText
+        			android:id="@+id/name_field"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"
+        			android:text="Name of task"
+        		/>
     	<!-- Right button with arrow -->
     	<Button android:id="@+id/button_Right_arrow" 
     		style="?android:attr/buttonStyleSmall"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
+    		android:text="}"
+    		android:textSize="30dp"
+    	/>
+    	</TableRow>
     		
-    		/>
-    		
-	</LinearLayout>
+	</TableLayout>
 </LinearLayout>
