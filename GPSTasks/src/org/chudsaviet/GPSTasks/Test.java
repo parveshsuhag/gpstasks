@@ -9,6 +9,6 @@ public class Test extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.task_activity);
+        setContentView(R.layout.place_activity);
     }
 }
