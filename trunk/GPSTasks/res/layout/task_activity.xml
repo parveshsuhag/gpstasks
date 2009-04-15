@@ -12,29 +12,41 @@
 
         <TableRow>
     	<!-- Left button with arrow -->
-    	<Button android:id="@+id/button_left_arrow" 
+    	<ImageButton android:id="@+id/button_left_arrow" 
     		style="?android:attr/buttonStyleSmall"
     		android:layout_width="wrap_content" 
     		android:layout_height="wrap_content"
-    		android:text="{"
-    		android:textSize="30dp"
+    		android:src="@drawable/arrow_left"
     	/>
     			<!-- EditText with task's name -->
     			<EditText
         			android:id="@+id/name_field"
         			android:layout_width="wrap_content"
         			android:layout_height="wrap_content"
-        			android:text="Name of task"
+        			android:text="Наименование задачи"
         		/>
     	<!-- Right button with arrow -->
-    	<Button android:id="@+id/button_Right_arrow" 
+    	<ImageButton android:id="@+id/button_Right_arrow" 
     		style="?android:attr/buttonStyleSmall"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:text="}"
-    		android:textSize="30dp"
+    		android:src="@drawable/arrow_right"
     	/>
-    	</TableRow>
-    		
+    	</TableRow>	
 	</TableLayout>
+	
+	<Spinner 
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:text="Здесь - приоритет"
+    />
+    
+    <TimePicker 
+        android:id="@+id/time_picker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+     />
+
 </LinearLayout>
