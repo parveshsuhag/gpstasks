@@ -5,4 +5,8 @@
     <string name="radius">Radius</string>
     <string name="meters">meters</string>
     <string name="here">Here</string>
+    <string name="choose_time">Choose time for the task</string>
+    <string name="desired_time">Desired time for the task</string>
+    <string name="minutes">minutes</string>
+    <string name="comments">Comments:</string>
 </resources>
