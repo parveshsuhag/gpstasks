@@ -23,7 +23,7 @@
         			android:id="@+id/name_field"
         			android:layout_width="wrap_content"
         			android:layout_height="wrap_content"
-        			android:text="Наименование задачи"
+        			android:text="Buy a pizza"
         		/>
     	<!-- Right button with arrow -->
     	<ImageButton android:id="@+id/button_Right_arrow" 
@@ -43,10 +43,64 @@
         android:text="Здесь - приоритет"
     />
     
-    <TimePicker 
-        android:id="@+id/time_picker"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-     />
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:stretchColumns="1">
+
+        <TableRow>
+        
+        <TextView
+    		android:layout_width="wrap_content" 
+    		android:layout_height="wrap_content"
+    		android:text="@string/desired_time"
+    	/>
+    	
+    	<ImageButton android:id="@+id/button_left_arrow" 
+    		style="?android:attr/buttonStyleSmall"
+    		android:layout_width="wrap_content" 
+    		android:layout_height="wrap_content"
+    		android:src="@drawable/arrow_left"
+    	/>
+    			
+    			<EditText
+        			android:id="@+id/desired_time_field"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"
+        			android:text="30"
+        		/>
+
+    	<ImageButton android:id="@+id/button_Right_arrow" 
+    		style="?android:attr/buttonStyleSmall"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:src="@drawable/arrow_right"
+    	/>
+    	
+    	<TextView
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="@string/minutes"/>
+    	</TableRow>	
+	</TableLayout>
+	
+	<Button android:id="@+id/button_left_arrow"
+    		android:layout_width="wrap_content" 
+    		android:layout_height="wrap_content"
+    		android:text="@string/choose_time"
+    	/>
+	
+	<TextView
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:text="@string/comments"/>
+        		
+     <EditText
+        			android:id="@+id/comments_field"
+        			android:layout_width="fill_parent"
+        			android:layout_height="wrap_content"
+        			android:text="comments are here"
+        		/>
+	
 
 </LinearLayout>
