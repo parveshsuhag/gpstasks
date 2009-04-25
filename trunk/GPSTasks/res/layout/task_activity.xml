@@ -5,17 +5,18 @@
     android:layout_height="fill_parent"
     >
     
-	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:stretchColumns="1">
-
-        <TableRow>
+	<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="0px">
+    
     	<!-- Left button with arrow -->
     	<ImageButton android:id="@+id/button_left_arrow" 
     		style="?android:attr/buttonStyleSmall"
-    		android:layout_width="wrap_content" 
+    		android:layout_width="0dip" 
     		android:layout_height="wrap_content"
+    		android:layout_weight="1" 
     		android:src="@drawable/arrow_left"
     	/>
     			<!-- EditText with task's name -->
@@ -23,32 +24,46 @@
         			android:id="@+id/name_field"
         			android:layout_width="wrap_content"
         			android:layout_height="wrap_content"
+        			android:layout_weight="4" 
         			android:text="Buy a pizza"
         		/>
     	<!-- Right button with arrow -->
     	<ImageButton android:id="@+id/button_Right_arrow" 
     		style="?android:attr/buttonStyleSmall"
-    		android:layout_width="wrap_content"
+    		android:layout_width="0dip"
     		android:layout_height="wrap_content"
+    		android:layout_weight="1" 
     		android:src="@drawable/arrow_right"
     	/>
-    	</TableRow>	
-	</TableLayout>
-	
-	<Spinner 
-        android:id="@+id/spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:drawSelectorOnTop="true"
-        android:text="Здесь - приоритет"
-    />
+    </LinearLayout>
     
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:stretchColumns="1">
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="0px">
+	
+			<ImageView
+		        		android:id="@+id/category_image"
+		        		android:layout_width="wrap_content"
+		        		android:layout_height="wrap_content"
+		        		android:src="@drawable/pizza"/>
+			
+			<Spinner 
+		        android:id="@+id/spinner"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:drawSelectorOnTop="true"
+    		/>
+    
+    </LinearLayout>
+    
+    <LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="0px">
 
-        <TableRow>
         
         <TextView
     		android:layout_width="wrap_content" 
@@ -56,51 +71,53 @@
     		android:text="@string/desired_time"
     	/>
     	
-    	<ImageButton android:id="@+id/button_left_arrow" 
-    		style="?android:attr/buttonStyleSmall"
-    		android:layout_width="wrap_content" 
-    		android:layout_height="wrap_content"
-    		android:src="@drawable/arrow_left"
-    	/>
-    			
-    			<EditText
-        			android:id="@+id/desired_time_field"
-        			android:layout_width="wrap_content"
-        			android:layout_height="wrap_content"
-        			android:text="30"
-        		/>
-
-    	<ImageButton android:id="@+id/button_Right_arrow" 
-    		style="?android:attr/buttonStyleSmall"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:src="@drawable/arrow_right"
-    	/>
+    	<LinearLayout
+	    android:orientation="horizontal"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:padding="0px">
+	    
+		    	<ImageButton android:id="@+id/button_left_arrow" 
+		    		style="?android:attr/buttonStyleSmall"
+		    		android:layout_width="0px" 
+		    		android:layout_height="wrap_content"
+		    		android:layout_weight="1" 
+		    		android:src="@drawable/arrow_left"
+		    	/>
+		    			
+		    			<EditText
+		        			android:id="@+id/desired_time_field"
+		        			android:layout_width="wrap_content"
+		        			android:layout_height="wrap_content"
+		        			android:layout_weight="2" 
+		        			android:text="30"
+		        		/>
+		
+		    	<ImageButton android:id="@+id/button_Right_arrow" 
+		    		style="?android:attr/buttonStyleSmall"
+		    		android:layout_width="0px"
+		    		android:layout_height="wrap_content"
+		    		android:layout_weight="1" 
+		    		android:src="@drawable/arrow_right"
+		    	/>
+    	</LinearLayout>
     	
     	<TextView
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
         		android:text="@string/minutes"/>
-    	</TableRow>	
-	</TableLayout>
-	
-	<Button android:id="@+id/button_left_arrow"
-    		android:layout_width="wrap_content" 
-    		android:layout_height="wrap_content"
-    		android:text="@string/choose_time"
-    	/>
+    </LinearLayout>
 	
 	<TextView
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
         		android:text="@string/comments"/>
         		
-     <EditText
-        			android:id="@+id/comments_field"
-        			android:layout_width="fill_parent"
-        			android:layout_height="wrap_content"
-        			android:text="comments are here"
-        		/>
+    <EditText
+        		android:id="@+id/comments_field"
+        		android:layout_width="fill_parent"
+        		android:layout_height="fill_parent"
+        		android:text="comments are here"/>
 	
 
 </LinearLayout>
