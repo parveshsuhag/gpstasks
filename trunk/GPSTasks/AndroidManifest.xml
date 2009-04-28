@@ -11,5 +11,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <provider android:name="org.chudsaviet.GPSTasks.GPSTasksProvider"
+          android:authorities="org.chudsaviet.GPSTasks.GPSTasksProvider" 
+          />
+        
     </application>
+    
+    <uses-permission 
+        android:name="android.permission.READ_CONTACTS">
+    </uses-permission>
+    
 </manifest> 
