@@ -12,23 +12,23 @@
     android:padding="0px">
     
     	<!-- Left button with arrow -->
-    	<ImageButton android:id="@+id/button_left_arrow" 
+    	<ImageButton android:id="@+id/task_button_previuos" 
     		style="?android:attr/buttonStyleSmall"
     		android:layout_width="0dip" 
     		android:layout_height="wrap_content"
     		android:layout_weight="1" 
     		android:src="@drawable/arrow_left"
     	/>
-    			<!-- EditText with task's name -->
-    			<EditText
-        			android:id="@+id/name_field"
-        			android:layout_width="wrap_content"
-        			android:layout_height="wrap_content"
-        			android:layout_weight="4" 
-        			android:text="Buy a pizza"
-        		/>
+    	<!-- EditText with task's name -->
+    	<EditText
+        	android:id="@+id/task_name_field"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="4" 
+        	android:text="Buy a pizza"/>
+        		
     	<!-- Right button with arrow -->
-    	<ImageButton android:id="@+id/button_Right_arrow" 
+    	<ImageButton android:id="@+id/task_button_next" 
     		style="?android:attr/buttonStyleSmall"
     		android:layout_width="0dip"
     		android:layout_height="wrap_content"
@@ -44,13 +44,13 @@
     android:padding="0px">
 	
 			<ImageView
-		        		android:id="@+id/category_image"
+		        		android:id="@+id/task_category_image"
 		        		android:layout_width="wrap_content"
 		        		android:layout_height="wrap_content"
 		        		android:src="@drawable/pizza"/>
 			
 			<Spinner 
-		        android:id="@+id/spinner"
+		        android:id="@+id/task_spinner"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:drawSelectorOnTop="true"
@@ -77,7 +77,7 @@
 	    android:layout_height="wrap_content"
 	    android:padding="0px">
 	    
-		    	<ImageButton android:id="@+id/button_left_arrow" 
+		    	<ImageButton android:id="@+id/task_time_button_dec" 
 		    		style="?android:attr/buttonStyleSmall"
 		    		android:layout_width="0px" 
 		    		android:layout_height="wrap_content"
@@ -86,14 +86,14 @@
 		    	/>
 		    			
 		    			<EditText
-		        			android:id="@+id/desired_time_field"
+		        			android:id="@+id/task_desired_time_field"
 		        			android:layout_width="wrap_content"
 		        			android:layout_height="wrap_content"
 		        			android:layout_weight="2" 
 		        			android:text="30"
 		        		/>
 		
-		    	<ImageButton android:id="@+id/button_Right_arrow" 
+		    	<ImageButton android:id="@+id/task_time_button_inc" 
 		    		style="?android:attr/buttonStyleSmall"
 		    		android:layout_width="0px"
 		    		android:layout_height="wrap_content"
@@ -112,12 +112,23 @@
         		android:layout_width="wrap_content"
         		android:layout_height="wrap_content"
         		android:text="@string/comments"/>
-        		
-    <EditText
-        		android:id="@+id/comments_field"
-        		android:layout_width="fill_parent"
-        		android:layout_height="fill_parent"
-        		android:text="comments are here"/>
-	
-
+    <LinearLayout
+    	android:orientation="vertical"
+   	 	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    >    		
+		    <EditText
+		        		android:id="@+id/task_comments_field"
+		        		android:layout_width="fill_parent"
+		        		android:layout_height="0px"
+		        		android:layout_weight="3" 
+		        		android:text="comments are here"/>
+		        		
+		    <Button android:id="@+id/task_new" 
+				    	style="?android:attr/buttonStyleSmall"
+				    	android:layout_width="fill_parent" 
+				    	android:layout_height="0px"
+				    	android:layout_weight="1" 
+				    	android:text="@string/new_task"/>
+	</LinearLayout>
 </LinearLayout>
