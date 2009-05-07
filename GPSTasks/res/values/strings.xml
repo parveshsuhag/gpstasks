@@ -10,6 +10,7 @@
     <string name="minutes">minutes</string>
     <string name="comments">Comments:</string>
     <string name="new_task">Create new task</string>
+    <string name="delete_task">Delete task</string>
     <string name="save">Save</string>
     
     <string name="db_ddl_place_type">
