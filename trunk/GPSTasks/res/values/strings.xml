@@ -9,4 +9,41 @@
     <string name="desired_time">Desired time for the task</string>
     <string name="minutes">minutes</string>
     <string name="comments">Comments:</string>
+    <string name="new_task">Create new task</string>
+    <string name="save">Save</string>
+    
+    <string name="db_ddl_place_type">
+    	CREATE  TABLE place_type (
+  		  idplace_type INTEGER NOT NULL ,
+  		  name TEXT NULL ,
+  		  image TEXT NULL ,
+  		  PRIMARY KEY (idplace_type) );
+  	</string>
+
+	<string name="db_ddl_place">
+		CREATE  TABLE  place (
+		  idplace INTEGER NOT NULL ,
+		  name TEXT NOT NULL ,
+		  x REAL NULL ,
+		  y REAL NULL ,
+		  radius REAL NULL ,
+		  comments TEXT NULL ,
+		  photo TEXT NULL ,
+		  idplace_type INTEGER NULL ,
+		  PRIMARY KEY (idplace));
+	</string>
+	
+	<string name="db_ddl_task">
+		CREATE  TABLE  task (
+		  idtask INTEGER NOT NULL ,
+		  name TEXT NOT NULL ,
+		  desired_time INTEGER NULL DEFAULT 10 ,
+		  time_limits TEXT NULL ,
+		  priority INTEGER NOT NULL DEFAULT 3 ,
+		  creation_time DATETIME NOT NULL ,
+		  comments TEXT NULL ,
+		  place_idplace INTEGER NULL ,
+		  PRIMARY KEY (idtask));
+    </string>
+    
 </resources>
