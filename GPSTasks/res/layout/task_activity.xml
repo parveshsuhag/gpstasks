@@ -129,12 +129,12 @@
 			    android:layout_height="0px"
 			    android:layout_weight="1"
 			    android:padding="0px">   		
-				    <Button android:id="@+id/task_new" 
+				    <Button android:id="@+id/task_new_save" 
 						    	style="?android:attr/buttonStyleSmall"
 						    	android:layout_width="fill_parent" 
 						    	android:layout_height="fill_parent"
 						    	android:layout_weight="1" 
-						    	android:text="@string/new_task"/>
+						    	android:text="@string/create_new_task"/>
 						    	
 					<Button android:id="@+id/task_delete" 
 						    	style="?android:attr/buttonStyleSmall"
