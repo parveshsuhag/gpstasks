@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.app.*;
-import android.content.DialogInterface;
 import android.database.*;
 import android.database.sqlite.*;
 
