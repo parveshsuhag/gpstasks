@@ -21,7 +21,7 @@ public class TaskActivity extends Activity {
 	SQLiteDatabase db;
 	Cursor cur;
 	int desired_time=30;//in minutes
-	State state;
+	private State state;
 	int idtask;
 	
 	private class InsertNewTaskListener implements OnClickListener
@@ -30,9 +30,33 @@ public class TaskActivity extends Activity {
 		public void onClick(View v) {
 					Log.d(getString(R.string.app_name),"saving new task");
 					
+					EditText name=(EditText)findViewById(R.id.task_name_field);
+					EditText comments=(EditText)findViewById(R.id.task_comments_field);	
+					EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
 					
-					setMode(State.ViewingEditing);
+					String query="INSERT INTO task (name,comments,desired_time,creation_time) VALUES ('"+
+						name.getText().toString()+"','"+
+						comments.getText().toString()+"',"+
+						dtime.getText().toString()+",'now');";
 					
+					try{
+						db.execSQL(query);
+					}
+					catch(SQLException e)
+					{
+						Log.e(getString(R.string.app_name), e.toString());
+					}
+					
+					requery();	
+		}
+		
+	}
+	
+	private class CancelNewTaskListener implements OnClickListener
+	{
+		@Override
+		public void onClick(View v) {			
+					requery();	
 		}
 		
 	}
@@ -59,23 +83,46 @@ public class TaskActivity extends Activity {
 	
 	private void requery()
 	{
-		cur.close();
-		cur=db.query("task", null, null, null, null, null, "idtask");
-		fillFieldsFromCursor();
+		Log.d(getString(R.string.app_name), "TaskActivity: requery()");
+		
+		if(cur!=null) cur.close();
+		
+		try{
+			cur=db.query("task", null, null, null, null, null, "idtask");
+		}
+		catch(SQLException e)
+		{
+			Log.e(getString(R.string.app_name), e.toString());
+		}
+    	
+		if(cur.getCount()!=0)
+    	{
+    		state=State.ViewingEditing;
+        	cur.moveToFirst();
+        	this.fillFieldsFromCursor();
+        	
+        	this.setState(State.ViewingEditing);
+    	}
+    	else
+    	{
+    		this.setState(State.NewTask);
+    	}
 	}
 	
-	private void setMode(State state)
+	private void setState(State state)
 	{
 		this.state=state;
 		
 		switch (state) {
 		case NewTask:
-			cur.close();
 			
 			Button b=(Button)findViewById(R.id.task_new_save);
 			b.setText(this.getString(R.string.save));
 			b.setOnClickListener(new InsertNewTaskListener());
 			
+			b=(Button)findViewById(R.id.task_delete);
+			b.setText(this.getString(R.string.cancel));
+			b.setOnClickListener(new CancelNewTaskListener());
 			
 			ImageButton ib=(ImageButton)findViewById(R.id.task_button_previuos);
 			ib.setClickable(false);
@@ -95,10 +142,6 @@ public class TaskActivity extends Activity {
 			break;
 		case ViewingEditing:
 			
-			cur=db.query("task", null, null, null, null, null, "idtask");
-			cur.moveToFirst();
-			this.fillFieldsFromCursor();
-			
 			ImageButton ib1=(ImageButton)findViewById(R.id.task_button_previuos);
 			ib1.setClickable(true);
 			
@@ -112,15 +155,21 @@ public class TaskActivity extends Activity {
 										{
 								    		@Override
 								    		public void onClick(View v) {
-								    			setMode(State.NewTask);
+								    			setState(State.NewTask);
 								    		}
 										}
 	        );
 			
 			b1=(Button)findViewById(R.id.task_delete);
 			b1.setOnClickListener(new DeleteTaskListener());
+			b1.setText(getString(R.string.delete_task));
 		break;
 		}
+	}
+	
+	public State getState()
+	{
+		return state;
 	}
 	
 	private void fillFieldsFromCursor()
@@ -147,26 +196,13 @@ public class TaskActivity extends Activity {
         try{
         	DatabaseHelper dbh=new DatabaseHelper(this);
         	db=dbh.getWritableDatabase();
-        	
-        	
-        	cur=db.query("task", null, null, null, null, null, "idtask");
-        	if(cur.getCount()!=0)
-        	{
-        		state=State.ViewingEditing;
-	        	cur.moveToFirst();
-	        	this.fillFieldsFromCursor();
-	        	
-	        	this.setMode(State.ViewingEditing);
-        	}
-        	else
-        	{
-        		this.setMode(State.NewTask);
-        	}
         }
         catch(Exception e)
         {
         	Log.e(this.getString(R.string.app_name), e.toString());
         }
+        
+        requery();
         
         
         ImageButton ib=(ImageButton)findViewById(R.id.task_button_previuos);
