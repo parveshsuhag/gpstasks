@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.app.*;
+import android.content.DialogInterface;
 import android.database.*;
 import android.database.sqlite.*;
 
@@ -61,10 +62,27 @@ public class TaskActivity extends Activity {
 		
 	}
 	
+	private boolean isThereAnyChanges()
+	{
+		idtask=cur.getInt(0);
+		
+		EditText name=(EditText)findViewById(R.id.task_name_field);
+		if(!name.getText().toString().equals(cur.getString(1))) return true;
+		
+		EditText comments=(EditText)findViewById(R.id.task_comments_field);
+		if(!comments.getText().toString().equals(cur.getString(6))) return true;
+		
+		EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
+		if(cur.getInt(2)!=Integer.parseInt(dtime.getText().toString())) return true;
+		
+		return false;
+	}
+	
 	private class DeleteTaskListener implements OnClickListener
 	{
 		@Override
 		public void onClick(View v) {
+					
 					Log.d(getString(R.string.app_name),"deleting task");
 					
 					String query="DELETE FROM task WHERE idtask="+idtask;
@@ -172,6 +190,30 @@ public class TaskActivity extends Activity {
 		return state;
 	}
 	
+	private void updateTaskFromForm()
+	{
+		Log.d(getString(R.string.app_name),"updating task "+idtask);
+		
+		EditText name=(EditText)findViewById(R.id.task_name_field);
+		EditText comments=(EditText)findViewById(R.id.task_comments_field);	
+		EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
+		
+		String query="UPDATE task SET name='"+
+			name.getText().toString()+"',comments='"+
+			comments.getText().toString()+"',desired_time="+
+			dtime.getText().toString()+
+			" WHERE idtask="+idtask;
+		
+		try{
+			db.execSQL(query);
+			this.requery();
+		}
+		catch(SQLException e)
+		{
+			Log.e(getString(R.string.app_name), e.toString());
+		}
+	}
+	
 	private void fillFieldsFromCursor()
 	{
 		idtask=cur.getInt(0);
@@ -210,6 +252,9 @@ public class TaskActivity extends Activity {
 									{
 							    		@Override
 							    		public void onClick(View v) {
+							    			if(isThereAnyChanges())
+						    					updateTaskFromForm();
+							    			
 							    			if(!cur.isFirst()){
 							    				cur.moveToPrevious();
 							    				fillFieldsFromCursor();						    			
@@ -223,6 +268,9 @@ public class TaskActivity extends Activity {
 									{
 							    		@Override
 							    		public void onClick(View v) {
+							    			if(isThereAnyChanges())
+						    					updateTaskFromForm();
+							    			
 							    			if(!cur.isLast()){
 							    				cur.moveToNext();
 							    				fillFieldsFromCursor();
