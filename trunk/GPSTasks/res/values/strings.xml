@@ -13,6 +13,7 @@
     <string name="enter_name_of_the_task">Enter name of the task</string>
     <string name="delete_task">Delete task</string>
     <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
     
     <string name="db_ddl_place_type">
     	CREATE  TABLE place_type (
