@@ -1,8 +1,12 @@
 package org.chudsaviet.GPSTasks;
 
 import android.app.*;
+import android.content.Context;
 import android.database.*;
 import android.database.sqlite.*;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class PlaceActivity extends Activity {
 	
@@ -23,8 +28,37 @@ public class PlaceActivity extends Activity {
 	int radius=RADIUS_DEFAULT;//in minutes
 	int x=0;
 	int y=0;
-	private State state;
 	int idplace;
+	State state;
+	
+	private class PlaceLocationListener implements LocationListener 
+    {
+        @Override
+        public void onLocationChanged(Location loc) {
+            if (loc != null) {
+                Toast.makeText(getBaseContext(), 
+                    "Location changed : Lat: " + loc.getLatitude() + 
+                    " Lng: " + loc.getLongitude(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, 
+            Bundle extras) {
+            // TODO Auto-generated method stub
+        }
+    }
 	
 	private class InsertNewPlaceListener implements OnClickListener
 	{
@@ -35,8 +69,8 @@ public class PlaceActivity extends Activity {
 					EditText name=(EditText)findViewById(R.id.place_name_field);
 					EditText comments=(EditText)findViewById(R.id.place_comments_field);	
 					EditText radius=(EditText)findViewById(R.id.place_radius_field);
-					EditText x_field=(EditText)findViewById(R.id.place_x_field);
-					EditText y_field=(EditText)findViewById(R.id.place_y_field);
+					//EditText x_field=(EditText)findViewById(R.id.place_x_field);
+					//EditText y_field=(EditText)findViewById(R.id.place_y_field);
 					
 					
 					
@@ -63,6 +97,25 @@ public class PlaceActivity extends Activity {
 		//@Override
 		public void onClick(View v) {			
 					requery();	
+		}
+		
+	}
+	
+	private class HereListener implements OnClickListener
+	{
+		//@Override
+		public void onClick(View v) {			
+			EditText x_field=(EditText)findViewById(R.id.place_x_field);
+			EditText y_field=(EditText)findViewById(R.id.place_y_field);
+			
+			LocationManager lm;
+			
+			lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			
+			Location l=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			
+			x_field.setText(Double.toString(l.getLatitude()));
+			y_field.setText(Double.toString(l.getLongitude()));
 		}
 		
 	}
@@ -322,5 +375,8 @@ public class PlaceActivity extends Activity {
 							    		}
 									}
         );
+		
+		Button b=(Button)findViewById(R.id.button_here);
+		b.setOnClickListener(new HereListener());
     }
 }
