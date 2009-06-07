@@ -1,66 +1,64 @@
 package org.chudsaviet.LocationPrototype;
 
-import java.util.List;
-
-import android.app.*;
-import android.content.*;
-import android.location.*;
+import android.app.Activity;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.*;
-import android.widget.*;
+import android.widget.Toast;
 
-public class LocationPrototype extends Activity {
-	
-	public OnClickListener buttonListener=new OnClickListener()
-	{
-		@Override
-		public void onClick(View v) {
-			LocationManager lm=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
-		       
-	        
-	        Log.i("GPS_PROVIDER", LocationManager.GPS_PROVIDER);
-	        Log.i("NETWORK_PROVIDER", LocationManager.NETWORK_PROVIDER);
-	        Log.i("KEY_PROXIMITY_ENTERING", LocationManager.KEY_PROXIMITY_ENTERING);
-	        
-	        List<String> ls=lm.getAllProviders();
-	        
-	        for(int i=0;i<ls.size();i++)
-	        	Log.i("Provider "+i, ls.get(i));
+public class LocationPrototype extends Activity 
+{
+    private LocationManager lm;
+    private LocationListener locationListener;
 
-	        LocationProvider lp=lm.getProvider("gps");
-	        Log.i("lp.getName()",lp.getName());
-	        
-	        
-	        if(lm.isProviderEnabled("gps"))
-	        {
-	        	Log.i("Location Provider", "gps enabled");
-	        	
-	        	try{
-	        		Location l=lm.getLastKnownLocation("gps");
-	        		Log.i("Location", l.toString());
-	        	}catch(Exception e)
-	        	{
-	        		Log.e("Location", e.toString());
-	        	}
-	        }
-	        else
-	        	Log.i("Location Provider", "gps disabled");
-	        	
-		}
-
-	};
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main); 
         
+        //---use the LocationManager class to obtain GPS locations---
+        lm = (LocationManager) 
+            getSystemService(Context.LOCATION_SERVICE);    
         
-        setContentView(R.layout.main);
+        locationListener = new MyLocationListener();
         
-        Button b=(Button)findViewById(R.id.button);
-        b.setOnClickListener(buttonListener);
+        lm.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER, 
+            0, 
+            0, 
+            locationListener);        
     }
+    
+    private class MyLocationListener implements LocationListener 
+    {
+        @Override
+        public void onLocationChanged(Location loc) {
+            if (loc != null) {
+                Toast.makeText(getBaseContext(), 
+                    "Location changed : Lat: " + loc.getLatitude() + 
+                    " Lng: " + loc.getLongitude(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, 
+            Bundle extras) {
+            // TODO Auto-generated method stub
+        }
+    }        
+    
 }
