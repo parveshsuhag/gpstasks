@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import android.app.*;
+import android.content.Intent;
 import android.database.*;
 import android.database.sqlite.*;
 
@@ -16,7 +17,7 @@ public class TaskActivity extends Activity {
 	static int MINUTES_SCROLL_INTERVAL=5;
 	static int MINUTES_DEFAULT=30;
 	
-	enum State {ViewingEditing,NewTask};
+	enum State {ViewingEditing,AddingNew};
 	
 	SQLiteDatabase db;
 	Cursor cur;
@@ -24,9 +25,10 @@ public class TaskActivity extends Activity {
 	private State state;
 	int idtask;
 	
+	
+		
 	private class InsertNewTaskListener implements OnClickListener
 	{
-		@Override
 		public void onClick(View v) {
 					Log.d(getString(R.string.app_name),"saving new task");
 					
@@ -54,7 +56,6 @@ public class TaskActivity extends Activity {
 	
 	private class CancelNewTaskListener implements OnClickListener
 	{
-		@Override
 		public void onClick(View v) {			
 					requery();	
 		}
@@ -62,9 +63,7 @@ public class TaskActivity extends Activity {
 	}
 	
 	private boolean isThereAnyChanges()
-	{
-		idtask=cur.getInt(0);
-		
+	{		
 		EditText name=(EditText)findViewById(R.id.task_name_field);
 		if(!name.getText().toString().equals(cur.getString(1))) return true;
 		
@@ -79,7 +78,6 @@ public class TaskActivity extends Activity {
 	
 	private class DeleteTaskListener implements OnClickListener
 	{
-		@Override
 		public void onClick(View v) {
 					
 					Log.d(getString(R.string.app_name),"deleting task");
@@ -105,7 +103,7 @@ public class TaskActivity extends Activity {
 		if(cur!=null) cur.close();
 		
 		try{
-			cur=db.query("task", null, null, null, null, null, "idtask");
+			cur=db.query("task", null, null, null, null, null, "creation_time");
 		}
 		catch(SQLException e)
 		{
@@ -122,7 +120,7 @@ public class TaskActivity extends Activity {
     	}
     	else
     	{
-    		this.setState(State.NewTask);
+    		this.setState(State.AddingNew);
     	}
 	}
 	
@@ -131,7 +129,7 @@ public class TaskActivity extends Activity {
 		this.state=state;
 		
 		switch (state) {
-		case NewTask:
+		case AddingNew:
 			
 			Button b=(Button)findViewById(R.id.task_new_save);
 			b.setText(this.getString(R.string.save));
@@ -170,9 +168,9 @@ public class TaskActivity extends Activity {
 			b1.setText(this.getString(R.string.create_new_task));
 			b1.setOnClickListener(     new OnClickListener()
 										{
-								    		@Override
+								 
 								    		public void onClick(View v) {
-								    			setState(State.NewTask);
+								    			setState(State.AddingNew);
 								    		}
 										}
 	        );
@@ -249,7 +247,7 @@ public class TaskActivity extends Activity {
         ImageButton ib=(ImageButton)findViewById(R.id.task_button_previuos);
 		ib.setOnClickListener(     new OnClickListener()
 									{
-							    		@Override
+							    		
 							    		public void onClick(View v) {
 							    			if(isThereAnyChanges())
 						    					updateTaskFromForm();
@@ -265,7 +263,7 @@ public class TaskActivity extends Activity {
 		ib=(ImageButton)findViewById(R.id.task_button_next);
 		ib.setOnClickListener(     new OnClickListener()
 									{
-							    		@Override
+							    		
 							    		public void onClick(View v) {
 							    			if(isThereAnyChanges())
 						    					updateTaskFromForm();
@@ -280,7 +278,7 @@ public class TaskActivity extends Activity {
 		ib=(ImageButton)findViewById(R.id.task_time_button_dec);
 		ib.setOnClickListener(     new OnClickListener()
 									{
-							    		@Override
+							    		
 							    		public void onClick(View v) {
 							    			
 							    			EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
@@ -294,7 +292,7 @@ public class TaskActivity extends Activity {
 		ib=(ImageButton)findViewById(R.id.task_time_button_inc);
 		ib.setOnClickListener(     new OnClickListener()
 									{
-							    		@Override
+							    		
 							    		public void onClick(View v) {
 							    			EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
 							    	
@@ -303,6 +301,18 @@ public class TaskActivity extends Activity {
 							    		}
 									}
         );
+		
+		Button bp=(Button)findViewById(R.id.task_edit_place_button);
+		bp.setOnClickListener(     new OnClickListener()
+		{
+    		
+    		public void onClick(View v) {
+    			Intent intent=new Intent();
+    			intent.setClass(getApplicationContext(), PlaceActivity.class);
+    			startActivity(intent);
+    		}
+		}
+);
 		
 		
 	}

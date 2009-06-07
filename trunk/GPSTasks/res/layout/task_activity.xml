@@ -43,11 +43,11 @@
     android:layout_height="wrap_content"
     android:padding="0px">
 	
-			<ImageView
-		        		android:id="@+id/task_category_image"
+			<Button
+		        		android:id="@+id/task_edit_place_button"
 		        		android:layout_width="wrap_content"
 		        		android:layout_height="wrap_content"
-		        		android:src="@drawable/pizza"/>
+		        		android:text="Edit/add place"/>
 			
 			<Spinner 
 		        android:id="@+id/task_spinner"
