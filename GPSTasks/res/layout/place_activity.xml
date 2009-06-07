@@ -12,29 +12,25 @@
     android:padding="0px">
     
     	<!-- Left button with arrow -->
-    	<ImageButton android:id="@+id/button_left_arrow" 
-    		style="?android:attr/buttonStyleSmall"
+    	<ImageButton style="?android:attr/buttonStyleSmall"
     		android:layout_width="0dip" 
     		android:layout_height="wrap_content"
     		android:layout_weight="1" 
     		android:src="@drawable/arrow_left"
-    	/>
+    	android:id="@+id/place_button_previous"/>
     			<!-- EditText with task's name -->
     			<EditText
-        			android:id="@+id/name_field"
         			android:layout_width="wrap_content"
         			android:layout_height="wrap_content"
         			android:layout_weight="4" 
-        			android:text="Panucchi"
-        		/>
+        			android:text="Panucchi" android:id="@+id/place_name_field"/>
     	<!-- Right button with arrow -->
-    	<ImageButton android:id="@+id/button_Right_arrow" 
-    		style="?android:attr/buttonStyleSmall"
+    	<ImageButton style="?android:attr/buttonStyleSmall"
     		android:layout_width="0dip"
     		android:layout_height="wrap_content"
     		android:layout_weight="1" 
     		android:src="@drawable/arrow_right"
-    	/>
+    	android:id="@+id/place_button_next"/>
     </LinearLayout>
 
 
@@ -54,14 +50,14 @@
     	<!-- EditText with task's name -->
     		
     		<EditText
-        		android:id="@+id/x_field"
+        		android:id="@+id/place_x_field"
         		android:layout_width="0dip"
         		android:layout_height="wrap_content"
         		android:layout_weight="3"
         		android:text="56' 45' 43'"/>
         		
              <EditText
-        		android:id="@+id/y_field"
+        		android:id="@+id/place_y_field"
         		android:layout_width="0dip"
         		android:layout_height="wrap_content"
         		android:layout_weight="3"
@@ -76,7 +72,7 @@
 </LinearLayout>
 	
 	
-<LinearLayout
+<!-- <LinearLayout
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -95,7 +91,7 @@
         		android:drawSelectorOnTop="true"
    		 />	
 </LinearLayout>
- 
+ -->
 
 <LinearLayout
 	    android:orientation="horizontal"
@@ -116,7 +112,7 @@
 	    android:layout_height="wrap_content"
 	    android:padding="0px">
 	    
-		    	<ImageButton android:id="@+id/button_left_arrow" 
+		    	<ImageButton android:id="@+id/place_radius_dec" 
 		    		style="?android:attr/buttonStyleSmall"
 		    		android:layout_width="0px" 
 		    		android:layout_height="wrap_content"
@@ -125,14 +121,13 @@
 		    	/>
 		    			
 		    			<EditText
-		        			android:id="@+id/radius_field"
 		        			android:layout_width="wrap_content"
 		        			android:layout_height="wrap_content"
 		        			android:layout_weight="2" 
 		        			android:text="300"
-		        		/>
+		        		android:id="@+id/place_radius_field"/>
 		
-		    	<ImageButton android:id="@+id/button_Right_arrow" 
+		    	<ImageButton android:id="@+id/place_radius_inc" 
 		    		style="?android:attr/buttonStyleSmall"
 		    		android:layout_width="0px"
 		    		android:layout_height="wrap_content"
@@ -152,11 +147,37 @@
         		android:layout_height="wrap_content"
         		android:text="@string/comments"/>
         		
-    <EditText
-        		android:id="@+id/comments_field"
-        		android:layout_width="fill_parent"
-        		android:layout_height="fill_parent"
-        		android:text="comments are here"/>
+    <LinearLayout
+    	android:orientation="vertical"
+   	 	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    >    		
+		    <EditText
+		        		android:id="@+id/place_comments_field"
+		        		android:layout_width="fill_parent"
+		        		android:layout_height="0px"
+		        		android:layout_weight="2" 
+		        		android:text="comments are here"/>
+		     <LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="wrap_content"
+			    android:layout_height="0px"
+			    android:layout_weight="1"
+			    android:padding="0px">   		
+				    <Button android:id="@+id/place_new_save" 
+						    	style="?android:attr/buttonStyleSmall"
+						    	android:layout_width="fill_parent" 
+						    	android:layout_height="fill_parent"
+						    	android:layout_weight="1" 
+						    	android:text="@string/create_new_place"/>
+						    	
+					<Button android:id="@+id/place_delete" 
+						    	style="?android:attr/buttonStyleSmall"
+						    	android:layout_width="fill_parent" 
+						    	android:layout_height="fill_parent"
+						    	android:layout_weight="1" 
+						    	android:text="@string/delete_place"/>
+			</LinearLayout>
+	</LinearLayout>
 
- 
 </LinearLayout>
