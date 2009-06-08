@@ -1,5 +1,8 @@
 package org.chudsaviet.GPSTasks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.*;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +27,46 @@ public class TaskActivity extends Activity {
 	int desired_time=30;//in minutes
 	private State state;
 	int idtask;
+	ArrayAdapter<PlaceRecord> adapter;
 	
-	
+	private class PlaceRecord
+	{
+		public String name;
+		public int idplace;
 		
+		public PlaceRecord(String name,int idplace)
+		{
+			this.name=name;
+			this.idplace=idplace;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return name;
+		}
+	}
+
+	private void setSpinnerToIdPlace(int idplace)
+	{
+		int count=adapter.getCount();
+		int position=0;
+		
+		for(int i=0;i<count;i++)
+		{
+			PlaceRecord pr=adapter.getItem(i);
+			if(idplace==pr.idplace)
+			{
+				position=i;
+				break;
+			}
+		}
+		
+		Spinner s=(Spinner)findViewById(R.id.task_spinner);
+		
+		s.setSelection(position, true);
+	}
+	
 	private class InsertNewTaskListener implements OnClickListener
 	{
 		public void onClick(View v) {
@@ -35,11 +75,13 @@ public class TaskActivity extends Activity {
 					EditText name=(EditText)findViewById(R.id.task_name_field);
 					EditText comments=(EditText)findViewById(R.id.task_comments_field);	
 					EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
+					Spinner s=(Spinner)findViewById(R.id.task_spinner);				
+					int idplace=((PlaceRecord)s.getSelectedItem()).idplace;
 					
-					String query="INSERT INTO task (name,comments,desired_time,creation_time) VALUES ('"+
+					String query="INSERT INTO task (name,comments,desired_time,creation_time,idplace) VALUES ('"+
 						name.getText().toString()+"','"+
 						comments.getText().toString()+"',"+
-						dtime.getText().toString()+",'now');";
+						dtime.getText().toString()+",'now',"+Integer.toString(idplace)+");";
 					
 					try{
 						db.execSQL(query);
@@ -72,6 +114,10 @@ public class TaskActivity extends Activity {
 		
 		EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
 		if(cur.getInt(2)!=Integer.parseInt(dtime.getText().toString())) return true;
+		
+        Spinner s=(Spinner)findViewById(R.id.task_spinner);
+		int idplace=((PlaceRecord)s.getSelectedItem()).idplace;
+		if(idplace!=cur.getInt(7)) return true;
 		
 		return false;
 	}
@@ -122,6 +168,28 @@ public class TaskActivity extends Activity {
     	{
     		this.setState(State.AddingNew);
     	}
+		
+        Spinner s=(Spinner)findViewById(R.id.task_spinner);
+        
+		
+		String[] columns={"name", "idplace"};
+		
+		try{
+			Cursor c=db.query("place", columns,null, null, null, null, null);
+			List<PlaceRecord> list=new ArrayList<PlaceRecord>();
+			
+			while(c.moveToNext())
+			{
+				PlaceRecord pr=new PlaceRecord(c.getString(0),c.getInt(1));
+				list.add(pr);
+			}
+			adapter=new ArrayAdapter<PlaceRecord>(this, android.R.layout.simple_spinner_dropdown_item, list);
+			
+			s.setAdapter(adapter);
+		}catch(Exception e)
+		{
+			Log.e(getString(R.string.app_name), e.toString());
+		}
 	}
 	
 	private void setState(State state)
@@ -194,12 +262,18 @@ public class TaskActivity extends Activity {
 		EditText name=(EditText)findViewById(R.id.task_name_field);
 		EditText comments=(EditText)findViewById(R.id.task_comments_field);	
 		EditText dtime=(EditText)findViewById(R.id.task_desired_time_field);
+		Spinner s=(Spinner)findViewById(R.id.task_spinner);
+		
+		int idplace=((PlaceRecord)s.getSelectedItem()).idplace;
 		
 		String query="UPDATE task SET name='"+
 			name.getText().toString()+"',comments='"+
 			comments.getText().toString()+"',desired_time="+
-			dtime.getText().toString()+
+			dtime.getText().toString()+",idplace="+
+			Integer.toString(idplace)+
 			" WHERE idtask="+idtask;
+		
+		//Log.d(getString(R.string.app_name),query);
 		
 		try{
 			db.execSQL(query);
@@ -225,6 +299,13 @@ public class TaskActivity extends Activity {
 		desired_time=cur.getInt(2);
 		dtime.setText(Integer.toString(cur.getInt(2)));
 		
+		setSpinnerToIdPlace(cur.getInt(7));
+	}
+	
+	public void onRestart()
+	{
+		super.onRestart();
+		requery();
 	}
 	
 	@Override
@@ -242,7 +323,6 @@ public class TaskActivity extends Activity {
         }
         
         requery();
-        
         
         ImageButton ib=(ImageButton)findViewById(R.id.task_button_previuos);
 		ib.setOnClickListener(     new OnClickListener()
@@ -303,7 +383,7 @@ public class TaskActivity extends Activity {
         );
 		
 		Button bp=(Button)findViewById(R.id.task_edit_place_button);
-		bp.setOnClickListener(     new OnClickListener()
+		bp.setOnClickListener(new OnClickListener()
 		{
     		
     		public void onClick(View v) {
@@ -312,7 +392,7 @@ public class TaskActivity extends Activity {
     			startActivity(intent);
     		}
 		}
-);
+		);
 		
 		
 	}
