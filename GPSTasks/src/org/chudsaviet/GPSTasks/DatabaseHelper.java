@@ -6,7 +6,7 @@ import android.util.Log;
 
 class DatabaseHelper extends SQLiteOpenHelper {
 	public static String DATABASE_NAME="gpstasks";
-	public static int DATABASE_VERSION=6;
+	public static int DATABASE_VERSION=8;
 
 	private Context context;
 	

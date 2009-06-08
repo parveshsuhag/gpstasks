@@ -49,7 +49,7 @@
 		  priority INTEGER NOT NULL DEFAULT 3 ,
 		  creation_time DATETIME NOT NULL ,
 		  comments TEXT NULL ,
-		  place_idplace INTEGER NULL ,
+		  idplace INTEGER NULL ,
 		  PRIMARY KEY (idtask));
     </string>
     
