@@ -26,8 +26,8 @@ public class PlaceActivity extends Activity {
 	SQLiteDatabase db;
 	Cursor cur;
 	int radius=RADIUS_DEFAULT;//in minutes
-	int x=0;
-	int y=0;
+	double x=0;
+	double y=0;
 	int idplace;
 	State state;
 	
@@ -69,15 +69,17 @@ public class PlaceActivity extends Activity {
 					EditText name=(EditText)findViewById(R.id.place_name_field);
 					EditText comments=(EditText)findViewById(R.id.place_comments_field);	
 					EditText radius=(EditText)findViewById(R.id.place_radius_field);
-					//EditText x_field=(EditText)findViewById(R.id.place_x_field);
-					//EditText y_field=(EditText)findViewById(R.id.place_y_field);
+					EditText x_field=(EditText)findViewById(R.id.place_x_field);
+					EditText y_field=(EditText)findViewById(R.id.place_y_field);
 					
 					
 					
 					String query="INSERT INTO place (name,comments,radius,x,y) VALUES ('"+
 						name.getText().toString()+"','"+
 						comments.getText().toString()+"',"+
-						radius.getText().toString()+",0,0);";
+						radius.getText().toString()+","+
+						x_field.getText()+","+
+						y_field.getText()+");";
 					
 					try{
 						db.execSQL(query);
@@ -244,10 +246,10 @@ public class PlaceActivity extends Activity {
 		if(cur.getInt(4)!=Integer.parseInt(radius.getText().toString())) return true;
 		
 		EditText xf=(EditText)findViewById(R.id.place_x_field);
-		if(cur.getInt(2)!=Integer.parseInt(xf.getText().toString())) return true;
+		if(cur.getDouble(2)!=Double.parseDouble(xf.getText().toString())) return true;
 		
 		EditText yf=(EditText)findViewById(R.id.place_y_field);
-		if(cur.getInt(3)!=Integer.parseInt(yf.getText().toString())) return true;
+		if(cur.getDouble(3)!=Double.parseDouble(yf.getText().toString())) return true;
 		
 		return false;
 	}
@@ -264,15 +266,15 @@ public class PlaceActivity extends Activity {
 		
 		EditText radius_f=(EditText)findViewById(R.id.place_radius_field);
 		radius=cur.getInt(4);
-		radius_f.setText(Integer.toString(cur.getInt(4)));
+		radius_f.setText(Integer.toString(radius));
 		
 		EditText xf=(EditText)findViewById(R.id.place_x_field);
-		x=cur.getInt(2);
-		xf.setText(Integer.toString(cur.getInt(2)));
+		x=cur.getDouble(2);
+		xf.setText(Double.toString(x));
 		
 		EditText yf=(EditText)findViewById(R.id.place_y_field);
-		y=cur.getInt(3);
-		yf.setText(Integer.toString(cur.getInt(3)));
+		y=cur.getDouble(3);
+		yf.setText(Double.toString(y));
 	}
 	
 	private void updatePlaceFromForm()
@@ -281,15 +283,18 @@ public class PlaceActivity extends Activity {
 		
 		EditText name=(EditText)findViewById(R.id.place_name_field);
 		EditText comments=(EditText)findViewById(R.id.place_comments_field);
-		
+		EditText x_field=(EditText)findViewById(R.id.place_x_field);
+		EditText y_field=(EditText)findViewById(R.id.place_y_field);
 		
 		String query="UPDATE place SET name='"+
 			name.getText().toString()+"',comments='"+
 			comments.getText().toString()+"',radius="+
-			Integer.toString(radius)+",x="+
-			Integer.toString(x)+",y="+
-			Integer.toString(y)+
-			" WHERE idplace="+idplace;
+			Integer.toString(radius)+",x='"+
+			x_field.getText().toString()+"',y='"+
+			y_field.getText().toString()+
+			"' WHERE idplace="+idplace;
+		
+		Log.d(getString(R.string.app_name),query);
 		
 		try{
 			db.execSQL(query);
